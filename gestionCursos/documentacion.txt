@@ -1,0 +1,54 @@
+0. MODELO DE DATOS:
+
+  curso = {
+  nombre: "Express Js",
+  nivel: 5,
+  fecha: "2021-01-20",
+  duracion: "20 dias"
+  }
+
+  npm list : lista de todos los modulos que se instalaron
+    npm install express : instalar express
+    npm install body-parser : instalar body-parser
+    npm install moment: instalar moment
+    npm install nodemon: instalar nodemon
+    npm install pg: instalar pg
+
+1. CREACION DATABASE Y TABLA:
+
++ CREATE DATABASE cursos;
+
+
++ CREATE TABLE cursos (id SERIAL PRIMARY KEY, nombre VARCHAR(50), nivel
+INT, fecha DATE, duracion INT);
+
+2. Conectar a la base de datos:
+
+ + routes/consultas.js
+
+  * Importar modulo pg
+    const {Pool} = require("pg");
+  
+  * Creacion de objeto de configuracion para el Pool
+    const config = {
+      user: "postgres",
+      host: "localhost",
+      database: "cursos"
+      password: "TUPASWORD",
+      port: 5432,
+    };
+  * Creacion del Pool
+    const pool = new Pool(config);
+  
+  * Creacion de las funciones que manejen las consultas al servidor
+  * Exportar las funciones mediante module.exports = {}
+
+  * Importar el modulo de funciones al archivo index.js
+    const {getCursos, getCurso, createCurso, updateCurso, deleteCurso} = require("./routes/consultas.js");
+
+  * confeccion de las rutas
+    app.get("/cursos", getCursos);
+    app.get("/cursos/:id", getCurso);
+    app.post("/cursos", createCurso);
+    app.put("/cursos/:id", updateCurso);
+    app.delete("/cursos/:id", deleteCurso);
